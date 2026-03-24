@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 import "./Register.css";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/userSlice";
-const dispatch = useDispatch();
 const Register = () => {
   const navigate = useNavigate();
+const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
     name: "",

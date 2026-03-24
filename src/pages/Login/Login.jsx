@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/userSlice";
-const dispatch = useDispatch();
 
 const Login = () => {
   const navigate = useNavigate();
+const dispatch = useDispatch();
 
   // form state
   const [formData, setFormData] = useState({
