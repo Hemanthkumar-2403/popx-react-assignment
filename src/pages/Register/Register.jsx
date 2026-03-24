@@ -2,7 +2,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Register.css";
-
+import { useDispatch } from "react-redux";
+import { setUser } from "../../redux/userSlice";
+const dispatch = useDispatch();
 const Register = () => {
   const navigate = useNavigate();
 
@@ -75,23 +77,28 @@ const Register = () => {
 
   // 🔥 submit validation (final check)
   const handleSubmit = (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    let newErrors = {};
+  let newErrors = {};
 
-    Object.keys(formData).forEach((key) => {
-      const error = validateField(key, formData[key]);
-      if (error) newErrors[key] = error;
-    });
+  Object.keys(formData).forEach((key) => {
+    const error = validateField(key, formData[key]);
+    if (error) newErrors[key] = error;
+  });
 
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
-    }
+  if (Object.keys(newErrors).length > 0) {
+    setErrors(newErrors);
+    return;
+  }
 
-    localStorage.setItem("user", JSON.stringify(formData));
-    navigate("/profile");
-  };
+  // ✅ save in localStorage
+  localStorage.setItem("user", JSON.stringify(formData));
+
+  // ✅ save in redux
+  dispatch(setUser(formData));
+
+  navigate("/profile");
+};
 
   // 🔥 form validity
   const isValid =

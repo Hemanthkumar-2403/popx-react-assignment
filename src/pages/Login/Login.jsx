@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../redux/userSlice";
+const dispatch = useDispatch();
 
 const Login = () => {
   const navigate = useNavigate();
@@ -22,16 +25,25 @@ const Login = () => {
 
   // handle login
   const handleLogin = (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (!isValid) {
-      alert("Please fill all fields");
-      return;
-    }
+  if (!isValid) {
+    alert("Please fill all fields");
+    return;
+  }
 
-    // navigate to profile
-    navigate("/profile");
-  };
+  const storedUser = JSON.parse(localStorage.getItem("user"));
+
+  if (!storedUser || storedUser.email !== formData.email) {
+    alert("Invalid user");
+    return;
+  }
+
+  // ✅ redux store
+  dispatch(setUser(storedUser));
+
+  navigate("/profile");
+};
 
   return (
 <div className="login-container">
